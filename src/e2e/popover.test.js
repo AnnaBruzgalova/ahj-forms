@@ -1,42 +1,40 @@
-/** @jest-environment jsdom */
-/* eslint-disable quotes */
 import puppeteer from 'puppeteer';
 
 describe('Inn Popover', () => {
-  let browser;
-  let page;
+    let browser;
+    let page;
 
-  beforeEach(async () => {
-    browser = await puppeteer.launch({
-      headless: true,
-      slowMo: 100,
-      devtools: false,
+    beforeEach(async() => {
+        browser = await puppeteer.launch({
+            headless: true,
+            slowMo: 100,
+            devtools: false,
+        });
+
+        page = await browser.newPage();
     });
 
-    page = await browser.newPage();
-  });
+    test('blockIn', async() => {
+        await page.goto('http://localhost:9000');
 
-  test('blockIn', async () => {
-    await page.goto('http://localhost:9000');
+        await page.waitForTimeout('.block');
+    });
 
-    await page.waitForTimeout('.block');
-  });
+    test('clickPopover', async() => {
+        jest.setTimeout(20000);
+        await page.goto('http://localhost:9000');
 
-  test('clickPopover', async () => {
-    jest.setTimeout(20000);
-    await page.goto('http://localhost:9000');
+        await page.waitForTimeout('.block');
 
-    await page.waitForTimeout('.block');
+        const ppov = await page.$('.block');
+        const btn = await ppov.$('.btn');
 
-    const ppov = await page.$('.block');
-    const btn = await ppov.$('.btn');
+        await btn.click();
 
-    await btn.click();
+        await page.waitForTimeout('.block .click.valid');
+    });
 
-    await page.waitForTimeout('.block .click.valid');
-  });
-
-  afterEach(async () => {
-    await browser.close();
-  });
+    afterEach(async() => {
+        await browser.close();
+    });
 });
