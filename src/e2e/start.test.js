@@ -1,26 +1,26 @@
 import puppeteer from 'puppeteer';
 
 describe('Page start', () => {
-    let browser;
-    let page;
+  let browser;
+  let page;
 
-    beforeEach(async() => {
-        browser = await puppeteer.launch({
-            headless: true,
-            slowMo: 100,
-            devtools: false,
-        });
-
-        page = await browser.newPage();
+  beforeEach(async () => {
+    browser = await puppeteer.launch({
+      headless: true,
+      slowMo: 100,
+      devtools: false,
     });
 
-    test('test', async() => {
-        await page.goto('http://localhost:9000');
+    page = await browser.newPage();
+  });
 
-        await page.waitForTimeout('body');
-    });
+  test('test', async () => {
+    await page.goto('http://localhost:9000');
 
-    afterEach(async() => {
-        await browser.close();
-    });
+    await page.waitForTimeout('body');
+  });
+
+  afterEach(async () => {
+    await browser.close();
+  });
 });

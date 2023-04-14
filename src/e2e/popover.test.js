@@ -1,40 +1,40 @@
 import puppeteer from 'puppeteer';
 
 describe('Inn Popover', () => {
-    let browser;
-    let page;
+  let browser;
+  let page;
 
-    beforeEach(async() => {
-        browser = await puppeteer.launch({
-            headless: true,
-            slowMo: 100,
-            devtools: false,
-        });
-
-        page = await browser.newPage();
+  beforeEach(async () => {
+    browser = await puppeteer.launch({
+      headless: true,
+      slowMo: 100,
+      devtools: false,
     });
 
-    test('blockIn', async() => {
-        await page.goto('http://localhost:9000');
+    page = await browser.newPage();
+  });
 
-        await page.waitForTimeout('.block');
-    });
+  test('blockIn', async () => {
+    await page.goto('http://localhost:9000');
 
-    test('clickPopover', async() => {
-        jest.setTimeout(20000);
-        await page.goto('http://localhost:9000');
+    await page.waitForTimeout('.block');
+  });
 
-        await page.waitForTimeout('.block');
+  test('clickPopover', async () => {
+    jest.setTimeout(20000);
+    await page.goto('http://localhost:9000');
 
-        const ppov = await page.$('.block');
-        const btn = await ppov.$('.btn');
+    await page.waitForTimeout('.block');
 
-        await btn.click();
+    const ppov = await page.$('.block');
+    const btn = await ppov.$('.btn');
 
-        await page.waitForTimeout('.block .click.valid');
-    });
+    await btn.click();
 
-    afterEach(async() => {
-        await browser.close();
-    });
+    await page.waitForTimeout('.block .click.valid');
+  });
+
+  afterEach(async () => {
+    await browser.close();
+  });
 });
